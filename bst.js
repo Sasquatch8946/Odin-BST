@@ -12,6 +12,24 @@ const BST = (function () {
 
     const Tree = function (arr) {
 
+        const prettyPrint = (node, prefix = '', isLeft = true) => {
+
+            if (node === null) {
+                return;
+            }
+
+            if (node.right !== null) {
+                prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+            }
+
+            console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+
+            if (node.left !== null) {
+                prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+            }
+        };
+
+
         const createTree = function (sortedArr, start, end) {
 
             if (start > end) {
@@ -47,12 +65,128 @@ const BST = (function () {
             preOrder(littleRoot.right);
         }
 
+        const insertNode = function (key, root) {
+            if (root === null) {
+                return new Node(key);
+            }
+
+            if (key === root.data) {
+                return root;
+            }
+
+            if (key <= root.data) {
+                root.left = insertNode(key, root.left);
+            } else if (key > root.data) {
+                root.right = insertNode(key, root.right);
+            }
+
+            return root;
+
+
+        }
+
+        const goLeft = function (root) {
+            if (root.left.left === null) {
+                const successor = root.left;
+                root.left = root.left.right;
+                return successor;
+            } else {
+                return goLeft(root.left);
+            }
+
+
+        }
+
+        const getInOrderSuccessor = function (root) {
+            if (root.right.left !== null) {
+                const inOrderSuccessor = goLeft(root.right);
+                return inOrderSuccessor;
+            } else {
+                const newRoot = root.right;
+                root.right = root.right.right;
+                return newRoot;
+            }
+
+        }
+
+
+        const hasNoChild = function (root) {
+            return root.left === null && root.right === null ?
+                true : false;
+        }
+
+        const hasSingleChild = function (root) {
+            /* const condition1 = root.left !== null && root.right === null;
+            const condition2 = root.right !== null && root.left === null;
+            if (condition1 || condition2) {
+                return true;
+            } else {
+                return false;
+            }*/
+           return root.right ? root.right : root.left;
+        }
+
+        const hasBothChildren = function (root) {
+            return root.left !== null && root.right !== null;
+        }
+
+        const restructure = function (root) {
+            if (hasNoChild(root)) {
+                return null;
+            } else if (hasBothChildren(root)) {
+                return getInOrderSuccessor(root);
+            } else if (hasSingleChild(root)) {
+                if (root.left !== null) {
+                    return root.left;
+                } else if (root.right !== null) {
+                    return root.right;
+                }
+            }
+
+        }
+
+
+        const delNode = function (key, root) {
+
+            if (root === null) {
+                console.log("node doesn't exist?")
+                return null;
+            }
+
+            if (key < root.data) {
+                root.left = delNode(key, root.left);          
+            } else if (key > root.data) {
+                root.right = delNode(key, root.right);
+            } else if (key === root.data) {
+                // determine whether the node has no children,
+                // 1 child, or both children
+                // execute special function that restructures
+                // nodes accordingly
+                const result = restructure(root);
+
+                if (result === null || hasNoChild(result)) {
+                    root = result;
+                } else if (hasSingleChild(result)) {
+                    root = result;
+                } else {
+                    root.data = result.data;
+                }
+            }
+
+            return root;
+
+
+        }
+
 
 
         return {
             root,
             buildTree,
             preOrder,
+            prettyPrint,
+            insertNode,
+            delNode,
         }
     }
 
