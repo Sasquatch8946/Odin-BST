@@ -29,7 +29,7 @@ const BST = (function () {
                 return null;
             }
 
-            const mid = Math.floor((start - end) / 2);
+            const mid = Math.floor((end - start) / 2);
             const root = new Node(arr[mid]);
             root.left = createTree(sortedArr, 0, mid - 1);
             root.right = createTree(sortedArr, mid + 1, end);

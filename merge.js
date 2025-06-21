@@ -10,8 +10,11 @@ const Merge = (function () {
 		while ((i < m) && (j < n)) {
 			if (A[i] < B[j]) {
 				C[k++] = A[i++];
-			} else {
+			} else if (B[j] < A[i]) {
 				C[k++] = B[j++];
+			} else if (A[i] === B[j]) {
+				C[k++] = A[i++];
+				j++;
 			}
 		}
 
