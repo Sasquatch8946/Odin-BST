@@ -116,14 +116,7 @@ const BST = (function () {
         }
 
         const hasSingleChild = function (root) {
-            /* const condition1 = root.left !== null && root.right === null;
-            const condition2 = root.right !== null && root.left === null;
-            if (condition1 || condition2) {
-                return true;
-            } else {
-                return false;
-            }*/
-           return root.right ? root.right : root.left;
+            return root.right ? root.right : root.left;
         }
 
         const hasBothChildren = function (root) {
@@ -135,12 +128,8 @@ const BST = (function () {
                 return { node: null, flag: false};
             } else if (hasBothChildren(root)) {
                 return { node: getInOrderSuccessor(root), flag: true };
-            } else if (hasSingleChild(root)) {
-                if (root.left !== null) {
-                    return { node: root.left, flag: false };
-                } else if (root.right !== null) {
-                    return { node: root.right, flag: false };
-                }
+            } else {
+                return { node: hasSingleChild(root), flag: false};
             }
 
         }
