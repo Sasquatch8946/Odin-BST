@@ -132,14 +132,14 @@ const BST = (function () {
 
         const restructure = function (root) {
             if (hasNoChild(root)) {
-                return null;
+                return { node: null, flag: false};
             } else if (hasBothChildren(root)) {
-                return getInOrderSuccessor(root);
+                return { node: getInOrderSuccessor(root), flag: true };
             } else if (hasSingleChild(root)) {
                 if (root.left !== null) {
-                    return root.left;
+                    return { node: root.left, flag: false };
                 } else if (root.right !== null) {
-                    return root.right;
+                    return { node: root.right, flag: false };
                 }
             }
 
@@ -164,12 +164,10 @@ const BST = (function () {
                 // nodes accordingly
                 const result = restructure(root);
 
-                if (result === null || hasNoChild(result)) {
-                    root = result;
-                } else if (hasSingleChild(result)) {
-                    root = result;
+                if (result.flag === false) {
+                    root = result.node;
                 } else {
-                    root.data = result.data;
+                    root.data = result.node.data;
                 }
             }
 
