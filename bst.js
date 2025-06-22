@@ -242,8 +242,9 @@ const BST = (function () {
                 }
             } else {
                 searchResult = root;
-                return searchResult;
             }
+
+            return searchResult;
 
 
         }
