@@ -165,6 +165,58 @@ const BST = (function () {
 
         }
 
+        const find = function (key, root, searchResult=null) {
+
+            if (root === null) {
+                return null;
+            }
+
+            if (key < root.data) {
+                const foundInLeft = find(key, root.left, searchResult);
+                if (foundInLeft !== null) {
+                    return foundInLeft;
+                }
+            } else if (key > root.data) {
+                const foundInRight = find(key, root.right, searchResult);
+                if (foundInRight !== null) {
+                    return foundInRight;
+                }
+            } else {
+                searchResult = root;
+                return searchResult;
+            }
+
+
+        }
+
+        const levelOrder = function (callback, root) {
+            if (root === null) {
+                return null;
+            }
+
+            if (!callback) {
+                throw new Error("need to supply callback");
+            }
+
+            let q = [root];
+            let cur;
+
+            while (q.length > 0) {
+                cur = q[0];
+                callback(cur);
+                if (cur.left !== null) {
+                    q.push(cur.left);
+                }
+
+                if (cur.right !== null) {
+                    q.push(cur.right);
+                }                
+
+                q.shift();
+
+            }
+        }
+
 
 
         return {
@@ -174,6 +226,8 @@ const BST = (function () {
             prettyPrint,
             insertNode,
             delNode,
+            find,
+            levelOrder,
         }
     }
 
