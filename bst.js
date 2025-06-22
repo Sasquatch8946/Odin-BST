@@ -83,6 +83,33 @@ const BST = (function () {
             inOrder(callback, root.right);
         }
 
+        const findHeight = function (root, steps = 0) {
+            if (root === null) {
+                return null;
+            }
+
+            if (root.left === null && root.right === null) {
+                return steps;
+            }
+
+            steps = steps + 1;
+            const stepsLeft = findHeight(root.left, steps);
+            const stepsRight = findHeight(root.right, steps);
+            if (stepsLeft !== undefined && stepsLeft > stepsRight) {
+                return stepsLeft;
+            } else if (stepsRight !== undefined && stepsRight > stepsLeft) {
+                return stepsRight;
+            } else if (stepsLeft !== undefined) {
+                return stepsLeft;
+            }
+        }
+
+        const height = function (key, root) {
+            const newRoot = find(key, root);
+            const height = findHeight(newRoot);
+            return height;
+        }
+
         const postOrder = function (callback, root) {
             if (root === null) {
                 return null;
@@ -297,6 +324,7 @@ const BST = (function () {
             levelOrderRecurs,
             inOrder,
             postOrder,
+            height,
 
         }
     }

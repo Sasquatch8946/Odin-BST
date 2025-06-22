@@ -10,8 +10,8 @@ const printMsg = function (msg) {
     console.log(msg);
 }
 t.prettyPrint(t.root);
-console.log("POSTORDER");
-t.postOrder(printMsg, t.root);
+console.log("HEIGHT");
+console.log(t.height(324, t.root));
 /*console.log("INORDER");
 t.inOrder(printData, t.root);
 console.log("POSTORDER");
