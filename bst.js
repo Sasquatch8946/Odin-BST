@@ -217,6 +217,40 @@ const BST = (function () {
             }
         }
 
+        //TODO: test this
+        const levelOrderRecurs = function (callback, root, queue=[]) {
+            if (root == null) {
+                return;
+            }
+
+            if (!callback) {
+                throw new Error("need to supply callback");
+            }
+
+            let q = queue.length > 0 ? queue : [root];
+
+            let cur;
+
+            if (q.length <= 0) {
+                return;
+            } else {
+                cur = q[0];
+                callback(cur);
+                if (cur.left !== null) {
+                    q.push(cur.left);
+                }
+
+                if (cur.right !== null) {
+                    q.push(cur.right);
+                }                
+
+                q.shift();
+
+                levelOrderRecurs(callback, q[0], q);
+
+            }
+
+        }
 
 
         return {
@@ -228,6 +262,7 @@ const BST = (function () {
             delNode,
             find,
             levelOrder,
+            levelOrderRecurs,
         }
     }
 

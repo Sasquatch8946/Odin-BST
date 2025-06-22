@@ -11,4 +11,4 @@ console.log(result);*/
 const printData = function (msg) {
     console.log(msg.data);
 }
-t.levelOrder(printData, t.root);
+t.levelOrderRecurs(printData, t.root);
