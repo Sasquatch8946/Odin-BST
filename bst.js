@@ -55,14 +55,46 @@ const BST = (function () {
 
         let root = buildTree(arr);
 
-        const preOrder = function (littleRoot=root) {
-            if (littleRoot == null) {
+        const preOrder = function (callback, root) {
+            if (root == null) {
                 return null;
             }
 
-            console.log(littleRoot.data);
-            preOrder(littleRoot.left);
-            preOrder(littleRoot.right);
+            if (!callback) {
+                throw new Error("need to supply callback");
+            }
+
+            callback(root.data);
+            preOrder(callback, root.left);
+            preOrder(callback, root.right);
+        }
+
+        const inOrder = function (callback, root) {
+            if (root === null) {
+                return null;
+            }
+
+            if (!callback) {
+                throw new Error("need to supply callback");
+            }
+
+            inOrder(callback, root.left);
+            callback(root.data);
+            inOrder(callback, root.right);
+        }
+
+        const postOrder = function (callback, root) {
+            if (root === null) {
+                return null;
+            }
+
+            if (!callback) {
+                throw new Error("need to supply callback");
+            }
+
+            postOrder(callback, root.left);
+            postOrder(callback, root.right);
+            callback(root.data);
         }
 
         const insertNode = function (key, root) {
@@ -263,6 +295,9 @@ const BST = (function () {
             find,
             levelOrder,
             levelOrderRecurs,
+            inOrder,
+            postOrder,
+
         }
     }
 
