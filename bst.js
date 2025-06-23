@@ -249,6 +249,33 @@ const BST = (function () {
 
         }
 
+        const depth = function (key, root, searchResult=null, steps=0) {
+
+            if (root === null) {
+                return null;
+            }
+
+
+            if (key < root.data) {
+                steps = steps + 1;
+                const foundInLeft = depth(key, root.left, searchResult, steps);
+                if (foundInLeft !== null) {
+                    return foundInLeft;
+                }
+            } else if (key > root.data) {
+                steps = steps + 1;
+                const foundInRight = depth(key, root.right, searchResult, steps);
+                if (foundInRight !== null) {
+                    return foundInRight;
+                }
+            } else {
+                return steps;
+            }
+
+            return null;
+        }
+
+
         const levelOrder = function (callback, root) {
             if (root === null) {
                 return null;
@@ -312,6 +339,64 @@ const BST = (function () {
 
         }
 
+        const isDifferenceInRange = function (diff) {
+            if (diff >= 0 && diff <= 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        const isSubTreeBalanced = function (subtree) {
+            // if subtree left or right is null, then?
+            // consider null to be 0 height?
+            let heightLeftSubTree;
+            let heightRightSubTree;
+
+            if (subtree === null) {
+                return true;
+            }
+
+            if (subtree.left === null) {
+                heightLeftSubTree = 0;
+            } else {
+                heightLeftSubTree = height(subtree.left.data, subtree.left);
+            }
+            
+            if (subtree.right === null) {
+                heightRightSubTree = 0;
+            } else {
+                heightRightSubTree = height(subtree.right.data, subtree.right);
+            }
+
+            if (heightLeftSubTree >= heightRightSubTree) {
+                const diff = heightLeftSubTree - heightRightSubTree;
+                return isDifferenceInRange(diff);
+            } else {
+                const diff = heightRightSubTree - heightLeftSubTree;
+                return isDifferenceInRange(diff);
+            }
+        }
+
+       
+        const isBalanced = function (root) {
+            if (root === null) {
+                return;
+            }             
+            isBalanced(root.left);
+            isBalanced(root.right);
+            const l = isSubTreeBalanced(root.left);
+            const r = isSubTreeBalanced(root.right);
+            if (l === true && r === true) {
+                return true;
+            } else {
+                return false;
+            }
+            
+
+        }
+
 
         return {
             root,
@@ -326,6 +411,8 @@ const BST = (function () {
             inOrder,
             postOrder,
             height,
+            depth,
+            isBalanced,
 
         }
     }
