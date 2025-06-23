@@ -69,7 +69,7 @@ const BST = (function () {
             preOrder(callback, root.right);
         }
 
-        const inOrder = function (callback, root) {
+        const inOrder = function (callback, root, arr=[]) {
             if (root === null) {
                 return null;
             }
@@ -78,9 +78,17 @@ const BST = (function () {
                 throw new Error("need to supply callback");
             }
 
-            inOrder(callback, root.left);
-            callback(root.data);
-            inOrder(callback, root.right);
+            inOrder(callback, root.left, arr);
+            callback(root.data, arr);
+            inOrder(callback, root.right, arr);
+
+            if (arr.length > 0) {
+                return arr;
+            } 
+        }
+
+        const collectNodes = function (data, arr) {
+            return arr.push(data);
         }
 
         const findHeight = function (root, steps = 0) {
@@ -397,6 +405,13 @@ const BST = (function () {
 
         }
 
+        const rebalance = function (root) {
+            const sortedArr = inOrder(collectNodes, root);
+            const newTree = buildTree(sortedArr);
+            this.root = newTree;
+            return this.root;
+        }
+
 
         return {
             root,
@@ -413,6 +428,7 @@ const BST = (function () {
             height,
             depth,
             isBalanced,
+            rebalance,
 
         }
     }

@@ -8,8 +8,16 @@ t.insertNode(16, t.root);
 const printData = function (msg) {
     console.log(msg.data);
 }
+
 const printMsg = function (msg) {
     console.log(msg);
 }
+
+const collectNodes = function (data, arr) {
+    return arr.push(data);
+}
+
 t.prettyPrint(t.root);
-console.log(t.isBalanced(t.root));
+t.rebalance(t.root);
+console.log("RESULT");
+t.prettyPrint(t.root);
