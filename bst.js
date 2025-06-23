@@ -84,7 +84,9 @@ const BST = (function () {
 
             if (arr.length > 0) {
                 return arr;
-            } 
+            } else {
+                return null;
+            }
         }
 
         const collectNodes = function (data, arr) {

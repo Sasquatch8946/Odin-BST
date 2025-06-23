@@ -1,6 +1,6 @@
 const driver = function () {
    
-    const getRandomArbtirary = function (min, max) {
+    const getRandomArbitrary = function (min, max) {
         return Math.random() * (max - min) + min;
     }
 
@@ -8,7 +8,7 @@ const driver = function () {
         let arr = [];
         
         for (let i = 0; i <= 100; i++) {
-            arr.push(parseInt(getRandomArbtirary(1, 1000)));
+            arr.push(parseInt(getRandomArbitrary(1, 100)));
         }
 
         return arr;
@@ -17,6 +17,7 @@ const driver = function () {
 
     return {
         createRandomArray,
+        getRandomArbitrary,
 
     }
 };
